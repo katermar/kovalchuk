@@ -10,20 +10,20 @@ public:
 	File();
 	virtual ~File();
 	void setFilename(string);
-	int fileSize();
+	virtual int fileSize();
 	void close() throw (FileException);
 	bool isEnd() const throw (FileException);
-	bool isVeryEnd();
-	bool makeEmpty() throw (FileException);
+	virtual bool isVeryEnd();
+	virtual bool makeEmpty() throw (FileException);
 	bool isEmpty();
 	virtual void read (T& obj);
+	virtual void read (T& obj, int counter);
 	virtual void write (T& obj);
+	string getFilename() const;
 protected:
-	//int mode; // 1 - read, 2 - write
 	string filename;
 	ifstream fileIn;
 	ofstream fileOut;
-	//	fstream file;
 };
 
 

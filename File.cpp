@@ -27,12 +27,6 @@ void File<T>::setFilename(string filename)
 {
 	this->filename = filename;
 }
-//
-//template <class T>
-//void File<T>::setMode(int mode)
-//{
-//	this->mode = mode;
-//}
 
 template <class T>
 int File<T> :: fileSize()
@@ -84,9 +78,21 @@ void File<T>::read(T& obj)
 }
 
 template <class T>
+void File<T>::read(T& obj, int counter)
+{
+}
+
+template <class T>
 void File<T>::write(T& obj)
 {
 }
+
+template <class T>
+string File<T> :: getFilename() const
+{
+	return filename;
+}
+
 
 template <class T>
 bool File<T>::isEnd() const

@@ -98,7 +98,7 @@ istream &operator>> (istream &in, Businesstourist &bt)
 	set_unexpected(myUnexpected);
 
 	cout << "\nenter num. of passport: ";
-	strcpy(bt.passportNum, stringError().c_str());
+	strcpy(bt.passportNum, passportNumError().c_str());
 	fflush(stdin);
 
 	for (int i = 0; i < 1; i++)

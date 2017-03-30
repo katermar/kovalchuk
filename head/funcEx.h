@@ -16,3 +16,6 @@ string nameInputException();
 
 int dateInputError(string s);
 string dateError();
+
+int passportNumException(string s);
+string passportNumError();

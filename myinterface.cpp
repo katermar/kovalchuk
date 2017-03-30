@@ -7,6 +7,7 @@
 
 //#include "TextFile.cpp"
 #include "head/Businesstourist.h"
+#include "BinaryFile.cpp"
 
 using namespace std;
 
@@ -53,26 +54,26 @@ void Interface<T> :: menuFirst() const
 		case 1:
 			{
 				Interface<Person> obj;
-				string path("person.txt");
+				string path("person");
 				obj.menu(path);
 				break;
 			}
 		case 2:
 			{
 				Interface<Tourist> obj;
-				obj.menu("tourist.txt");
+				obj.menu("tourist");
 				break;
 			}
 		case 3:
 			{
 				Interface<Businessman> obj;
-				obj.menu("businessman.txt");
+				obj.menu("businessman");
 				break;
 			}
 		case 4:
 			{
 				Interface<Businesstourist> obj;
-				obj.menu("businesstourist.txt");
+				obj.menu("businesstourist");
 				break;	
 			}
 		default:
@@ -84,21 +85,14 @@ void Interface<T> :: menuFirst() const
 template <class T>
 void Interface<T> :: menu(string filename)
 {
-
+	filename += ".DAT";
 	Tree<T> tree;
 	int choice = 0;
 	T a;
-	TextFile<T> file;
+	BinaryFile<T> file;
 	file.setFilename(filename);
-	try
-	{
-		tr->read(file);
-	}
-	catch (FileException exception)
-	{
-		exception.what();
-	}
-	//file.close();
+	tr->read(file);
+
 	while (choice != 5)
 	{
 		system("pause");

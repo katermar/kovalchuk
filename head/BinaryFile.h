@@ -12,7 +12,10 @@ public:
 	BinaryFile();
 	~BinaryFile();
 	void write(T& obj) override;
-	void read(T& obj) override;
+	void read(T& obj, int counter) override;
+	int fileSize() override;
+	bool makeEmpty() override;
+	bool isVeryEnd() override;
 	//template<class F>
 	//TextFile<F> operator<< (TextFile<F> &out, F& obj) throw (FileException);
 	//template<class F>

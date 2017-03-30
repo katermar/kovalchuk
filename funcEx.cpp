@@ -1,6 +1,7 @@
 #pragma once
 #include "head/funcEx.h"
 #include "head/Header.h"
+#include <regex>
 
 void myTerminate()
 {
@@ -41,10 +42,14 @@ int numberInputError() throw (MyExceptionIn)
 
 int dateInputError(string s) throw (MyExceptionIn)
 {
-	if (s.length() != 10 || s[5] != '/' || s[2] != '/')
+	//if (s.length() != 10 || s[5] != '/' || s[2] != '/')
+	regex date("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$");
+	if (regex_match(s, date))	
+		return 0;
+	else
 		throw MyExceptionIn(208, "dateInputError ");
 
-	return 0;
+	
 }
 
 string dateError()
@@ -132,7 +137,7 @@ string nameInputException()
 
 int nameException(string s) throw (MyExceptionIn) 
 {
-	int lan = 0;
+	/*int lan = 0;
 	for (int i = 0; i < s.length(); i++) {
 		int n  = (int)s[i];
 		if ((int)s[0] <= 65 || (int)s[0] >= 90) throw MyExceptionIn(206, "notCorrectInput");
@@ -149,7 +154,42 @@ int nameException(string s) throw (MyExceptionIn)
 		}
 		else throw MyExceptionIn(200, "nameInputException");
 	}
-	return lan;
+	return lan;*/
+	regex simpleName("^[A-Z][a-z]*$");
+	regex irishName("^[A-Z][a-z][A-Z][a-z]*$");
+	regex nameWithHyphen("^[A-Z][a-z]*(-|\\s)[A-Z][a-z]*$");
+	if (regex_match(s, nameWithHyphen) || regex_match(s, simpleName) || regex_match(s, irishName)) 
+		return 1;
+	else throw MyExceptionIn(200, "nameInputException");
+}
+
+int passportNumException(string s) throw (MyExceptionIn)
+{
+	regex pn("[A-Z][A-Z][0-9]{7}");
+	if (regex_match(s, pn))
+		return 1;
+	else throw MyExceptionIn(201, "PassportNumberException");
+}
+
+string passportNumError() throw (MyExceptionIn)
+{
+	string pas;
+	int error = 0;
+	set_terminate(myTerminate);
+	set_unexpected(myUnexpected);
+	do {
+		try {
+			cin >> pas;
+			passportNumException(pas);
+			error = 1;
+		} catch (MyExceptionIn ex) {
+			cout << ex.what() << " detected. try again" << endl;
+		} catch (...) {
+			cout << "Ошибка! Вызван абсолютный обработчик!";
+		}
+	} while(!error);
+
+	return pas;
 }
 
 int stringNumberInputError(string s) throw (MyExceptionIn)

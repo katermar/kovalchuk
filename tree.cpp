@@ -190,12 +190,22 @@ void Tree<T> :: read(File<T> &file)
 	T obj;
 	try
 	{
+		if (file.getFilename().find(".DAT") == string::npos)
 		while (!file.isVeryEnd())
 		{
+			//T obj;
 			file.read(obj);
 			if (!obj.isNull()) this->newNode(obj);
 			else break;
 		}
+		else
+			for (int i = 0; i < file.fileSize(); i++)
+			{
+				//T obj;
+				file.read(obj, i);
+				if (!obj.isNull()) this->newNode(obj);
+				else break;
+			}
 	}
 	catch (FileException exception)
 	{

@@ -80,7 +80,7 @@ istream &operator>> (istream &in, Tourist &bt)
 	in >> *(dynamic_cast<Person*>(&bt));
 
 	cout << "\nenter num. of passport: ";
-	strcpy(bt.passportNum, stringError().c_str());
+	strcpy(bt.passportNum, passportNumError().c_str());
 
 	for (int i = 0; i < 1; i++)
 	{
@@ -88,7 +88,7 @@ istream &operator>> (istream &in, Tourist &bt)
 		strcpy(bt.data[i].date, dateError().c_str());
 
 		cout << "\nenter country: ";
-		strcpy(bt.data[i].country, stringError().c_str());
+		strcpy(bt.data[i].country, nameInputException().c_str());
 	}
 
 	return in;
