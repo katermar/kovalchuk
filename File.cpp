@@ -16,6 +16,11 @@ File<T>::File()
 }
 
 template <class T>
+void File<T>::openFile()
+{
+}
+
+template <class T>
 File<T> :: ~File()
 {
 	fileIn.close();

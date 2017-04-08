@@ -8,6 +8,7 @@ class File
 public:
 	explicit File(string filename);
 	File();
+	virtual void openFile();
 	virtual ~File();
 	void setFilename(string);
 	virtual int fileSize();

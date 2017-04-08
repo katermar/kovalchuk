@@ -11,6 +11,7 @@ public:
 	explicit TextFile(string filename);
 	TextFile();
 	~TextFile();
+	void openFile() override;
 	void write(T& obj) override;
 	void read(T& obj) override;
 

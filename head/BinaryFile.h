@@ -11,6 +11,7 @@ public:
 	explicit BinaryFile(string filename);
 	BinaryFile();
 	~BinaryFile();
+	void openFile();
 	void write(T& obj) override;
 	void read(T& obj, int counter) override;
 	int fileSize() override;

@@ -21,12 +21,15 @@ TextFile<T> :: ~TextFile()
 }
 
 template <class T>
+void TextFile<T> :: openFile()
+{
+	fileOut.open(filename, ios::app);
+}
+
+template <class T>
 void TextFile<T> :: write(T& obj) 
 {
-	fileOut.close();
-	fileOut.open(filename, ios::app);
 	fileOut << obj;
-	fileOut.close();
 }
 
 template <class T>

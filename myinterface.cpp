@@ -85,13 +85,17 @@ void Interface<T> :: menuFirst() const
 template <class T>
 void Interface<T> :: menu(string filename)
 {
-	filename += ".DAT";
+	filename += ".txt";
 	Tree<T> tree;
 	int choice = 0;
 	T a;
-	BinaryFile<T> file;
+	TextFile<T> file;
 	file.setFilename(filename);
+	file.openFile();
 	tr->read(file);
+
+	TreeIterator<T> iterator(tr->getRoot());
+	cout << (*iterator)->getValue();
 
 	while (choice != 5)
 	{
@@ -100,10 +104,10 @@ void Interface<T> :: menu(string filename)
 		cout << "------------------------------" << endl
 			<< setw(20) <<"MENU" << endl
 			<< "------------------------------" << endl
-			<< "1.Добавить узел" << endl // нельзя отменить последний введенный узел, если это не первый
-			<< "2.Удалить узел" << endl // работает
+			<< "1.Добавить узел" << endl 
+			<< "2.Удалить узел" << endl 
 			<< "3.Просмотр данных" << endl
-			<< "4.Удалить все узелы" << endl // при удалении все узлов и без сохранения, когда отменяю посл транзакцию, то остается только один узел первый, скорее всего
+			<< "4.Удалить все узелы" << endl 
 			<< "5.Выход" << endl
 			<< "****** 0. ОТМЕНА ******" << endl;
 		cin >> choice;

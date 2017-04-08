@@ -21,13 +21,15 @@ BinaryFile<T>::~BinaryFile()
 }
 
 template <class T>
+void BinaryFile<T> :: openFile()
+{	
+	fileOut.open(filename, ios::binary | ios::app);
+}
+
+template <class T>
 void BinaryFile<T>::write(T& obj)
 {
-	fileOut.close();
-	fileOut.open(filename, ios::binary | ios::app);
-
-	fileOut.write(reinterpret_cast<char*>(&obj), sizeof(obj));//fileOut << reinterpret_cast<char*>(&obj);
-	fileOut.close();
+	fileOut.write(reinterpret_cast<char*>(&obj), sizeof(obj));
 }
 
 template <class T>

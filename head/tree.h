@@ -1,16 +1,19 @@
 #pragma once
 #include "F://BSUIR//2 kurs//нно//laba 7 transactions/File.cpp"
-//#include "File.cpp"
 
 template <class T> class Tree;
+template <class T> class TreeIterator;
 
 template <class T>
 struct TreeNode
 {
 	friend class Tree<T>;
-public:
+	friend class TreeIterator<T>;
 	explicit TreeNode(const T &a);
 	T getValue();
+	TreeNode<T>* getLeft() const;
+	TreeNode<T>* getRight() const;
+	TreeNode<T>* getParent() const;
 protected:
 	TreeNode* left;
 	TreeNode* right;
@@ -42,4 +45,20 @@ public:
 	void write(TreeNode<T>* tn, File<T>& file);
 	void writeFile(File<T>& file);
 	void read(File<T>& file);
+};
+
+template <class T>
+class TreeIterator
+{
+	TreeNode<T>* node;
+	TreeNode<T>* nextNode;
+	TreeNode<T>* prevNode;
+public:
+	bool hasNext();
+	TreeIterator(TreeNode<T>* root);
+	void operator++();
+	TreeNode<T>* operator*();
+	bool operator==(const TreeIterator<T>& x);
+	bool operator!=(const TreeIterator<T>& x);
+	void operator--();
 };

@@ -2,8 +2,6 @@
 #include "head/tree.h"
 #include "head/Header.h"
 #include "head/File.h"
-#include "F://BSUIR//2 kurs//нно//laba 7 transactions/File.cpp"
-#include "F://BSUIR//2 kurs//нно//laba 7 transactions/TextFile.cpp"
 
 template<class T>
 TreeNode<T> :: TreeNode(const T &a)
@@ -16,6 +14,24 @@ template <class T>
 T TreeNode <T> :: getValue()
 {
 	return val;
+}
+
+template <class T>
+TreeNode<T>* TreeNode<T>::getLeft() const
+{
+	return left;
+}
+
+template <class T>
+TreeNode<T>* TreeNode<T>::getRight() const
+{
+	return right;
+}
+
+template <class T>
+TreeNode<T>* TreeNode<T>::getParent() const
+{
+	return parent;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +188,7 @@ void Tree<T> :: writeFile(File<T> &file)
 	try
 	{
 		file.makeEmpty();
+		file.openFile();
 		write(this->getRoot(), file);
 	}
 	catch (FileException exception)
@@ -191,17 +208,21 @@ void Tree<T> :: read(File<T> &file)
 	try
 	{
 		if (file.getFilename().find(".DAT") == string::npos)
-		while (!file.isVeryEnd())
-		{
-			//T obj;
-			file.read(obj);
-			if (!obj.isNull()) this->newNode(obj);
-			else break;
-		}
+			//while (!file.isVeryEnd())
+				while (true)
+				{
+					//T obj;
+					file.openFile();
+					file.read(obj);
+					if(file.isVeryEnd()) break;
+					if (!obj.isNull()) this->newNode(obj);
+					//else break;
+				}
 		else
 			for (int i = 0; i < file.fileSize(); i++)
 			{
 				//T obj;
+				file.openFile();
 				file.read(obj, i);
 				if (!obj.isNull()) this->newNode(obj);
 				else break;
@@ -261,3 +282,74 @@ TreeNode<T>*  Tree<T> :: rewriteTree(TreeNode<T> *treeOriginal, TreeNode<T> *par
 	return treeNew;	
 }
 
+///////////////////////////////////////////////////////////////////////////
+template <class T>
+bool TreeIterator<T>::hasNext()
+{
+	return nextNode != nullptr;
+}
+
+template <class T>
+TreeIterator<T>::TreeIterator(TreeNode<T>* root)
+{
+	prevNode = nullptr;
+	nextNode = root;
+	if(nextNode == nullptr)
+		return;
+	while (nextNode->left != nullptr)
+		nextNode = nextNode->left;
+	node = nextNode;
+}
+
+template <class T>
+void TreeIterator<T>:: operator++()
+{
+	if(!hasNext()) throw new exception("No next member\n");
+	TreeNode<T>* r = nextNode;
+	prevNode = node;
+	// if you can walk right, walk right, then fully left.
+	// otherwise, walk up until you come from left.
+	if(nextNode->right != nullptr){
+		nextNode = nextNode->right;
+		while (nextNode->left != nullptr)
+			nextNode = nextNode->left;
+		node = r;
+		return;
+	} else while(true){
+		if(nextNode->parent == nullptr){
+			nextNode = nullptr;
+			node = r;
+			return;
+		}
+		if(nextNode->parent->left == nextNode){
+			nextNode = nextNode->parent;
+			node = r;
+			return;
+		}
+		nextNode = nextNode->parent;
+	}
+}
+
+template <class T>
+TreeNode<T>* TreeIterator<T>::operator*()
+{
+	return node;
+}
+
+template <class T>
+bool TreeIterator<T>::operator==(const TreeIterator<T>& x) 
+{
+	return x.node == this->node;
+}
+
+template <class T>
+bool TreeIterator<T>::operator!=(const TreeIterator<T>& x) 
+{
+	return x.node != this->node;
+}
+
+template <class T>
+void TreeIterator<T>::operator--()
+{
+	node = prevNode;
+}

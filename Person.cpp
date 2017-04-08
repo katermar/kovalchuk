@@ -192,7 +192,7 @@ bool Person :: operator==(const Person& obj) const
 
 ofstream &operator<< (ofstream &out, Person& obj)
 {
-	out << obj.name << " " << obj.surname << " " << obj.birth << "$";
+	out << obj.name << ' ' << obj.surname << ' ' << obj.birth << endl;//"$";
 	return out;
 }
 
@@ -201,9 +201,9 @@ ifstream &operator>> (ifstream &in, Person& obj)
 	in.getline(obj.name, 20, ' ');
 	in.getline(obj.surname, 20, ' ');
 	char b[6];
-	in.getline(b, 6, '$');
+	in.getline(b, 6, '\n');
 	obj.birth = atoi(b);
-
+	//in >> obj.birth; 
 	return in;
 }
 
